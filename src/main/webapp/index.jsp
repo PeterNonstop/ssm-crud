@@ -146,7 +146,20 @@
     </div>
     <%--按钮--%>
     <div class="row">
-        <div class="col-md-4 col-md-offset-8">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-btn">
+                     <button class="btn btn-default" type="button">请输入员工ID：</button>
+                </span>
+                <input type="a" class="form-control" id="search_input" placeholder="Search for...">
+                <span class="input-group-btn">
+                   <button class="btn btn-default" type="button" id="search_btn">搜索</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-4 -->
+
+
+        <div class="col-md-4 col-md-offset-4">
             <button class="btn btn-primary" id="emp_add_modal_btn">新增</button>
             <button class="btn btn-danger" id="emp_delete_all_btn">删除</button>
         </div>
@@ -223,6 +236,8 @@
         //page_info_area,使用之前先清空
         $("#emps_table tbody").empty();
 
+        $("#search_input").empty();
+
         //清空多选框的状态
         $("#check_all").prop("checked", false);
 
@@ -268,6 +283,7 @@
     function build_page_info(result) {
         //page_info_area,使用前清空
         $("#page_info_area").empty();
+        $('#page_info_area').html("");
 
         //console.log(result);
         $("#page_info_area").append("< 当前"
@@ -645,6 +661,27 @@
                 }
             });
         }
+    });
+
+    //根据ID查询
+    $("#search_btn").click(function (){
+        var empId = $("#search_input").val();
+        // alert($("#search_input").val());
+
+        $.ajax({
+            url: "${APP_PATH}/empsWithId",
+            type: "get",
+            data: "empId=" + empId,
+            success: function (result) {
+                console.log(result)
+                // 1.页面解析并显示员工数据
+                build_emps_table(result);
+                // 2.解析并显示分页信息
+                build_page_info(result);
+                // 3.解析并显示分页条
+                build_page_nav(result);
+            }
+        });
     });
 
 </script>

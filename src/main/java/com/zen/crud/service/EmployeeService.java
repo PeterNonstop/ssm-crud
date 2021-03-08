@@ -80,4 +80,8 @@ public class EmployeeService {
 
         employeeMapper.deleteByExample(example);
     }
+
+    public Employee getEmpWithDept(Integer id) {
+        return employeeMapper.selectByPrimaryKeyWithDept(id);
+    }
 }

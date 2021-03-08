@@ -218,4 +218,36 @@ public class EmployeeController {
 
         return Msg.success();
     }
+
+    /**
+     * 通过ID查询带部门信息
+     * @param empId
+     * @param request
+     * @return
+     */
+
+    @RequestMapping("/empsWithId")
+    @ResponseBody
+    public Msg getEmpsWithId(Integer empId, HttpServletRequest request) {
+        //System.out.println("EmployeeController...getEmpsWithId===>" + request.getParameter("empId"));
+
+        //引入PageHelper分页插件
+        //在查询之前只需调用，传入页码，以及每页的页数
+        PageHelper.startPage(1, 7);
+        //startPage后面紧跟就是一个分页查询
+        List<Employee> emps = new ArrayList<>();
+        if (empId != null) {
+            System.out.println("EmployeeController...getEmpsWithId===>" + Integer.parseInt(request.getParameter("empId")));
+            Integer id = Integer.parseInt(request.getParameter("empId"));
+            emps.add(employeeService.getEmpWithDept(id));
+        } else {
+            emps = employeeService.getAll();
+        }
+
+        //用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行。
+        //封装了详细的分页信息，包括我们查询出来的数据，传入连续显示的页数(5)
+        PageInfo page = new PageInfo(emps, 5);
+
+        return Msg.success().add("pageInfo", page);
+    }
 }
