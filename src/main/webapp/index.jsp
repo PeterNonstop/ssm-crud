@@ -146,20 +146,30 @@
     </div>
     <%--按钮--%>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="input-group">
+                <input type="a" class="form-control" id="search_input" placeholder="请输入员工ID...">
                 <span class="input-group-btn">
-                     <button class="btn btn-default" type="button">请输入员工ID：</button>
+                   <button class="btn btn-default" type="button" id="search_btn">ID搜索</button>
                 </span>
-                <input type="a" class="form-control" id="search_input" placeholder="Search for...">
-                <span class="input-group-btn">
-                   <button class="btn btn-default" type="button" id="search_btn">搜索</button>
-                </span>
+
             </div><!-- /input-group -->
-        </div><!-- /.col-lg-4 -->
+
+        </div><!-- /.col-lg-3 -->
+
+        <div class="col-lg-3 col-md-offset-1">
+            <div class="input-group">
+                <input type="a" class="form-control" id="page_search_input" placeholder="请输入页码...">
+                <span class="input-group-btn">
+                   <button class="btn btn-default" type="button" id="page_search_btn">页码搜索</button>
+                </span>
+
+            </div><!-- /input-group -->
+
+        </div><!-- /.col-lg-3 -->
 
 
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-4 col-md-offset-1">
             <button class="btn btn-primary" id="emp_add_modal_btn">新增</button>
             <button class="btn btn-danger" id="emp_delete_all_btn">删除</button>
         </div>
@@ -236,7 +246,8 @@
         //page_info_area,使用之前先清空
         $("#emps_table tbody").empty();
 
-        $("#search_input").empty();
+        $("#search_input").prop("value","");
+        $("#page_search_input").prop("value","");
 
         //清空多选框的状态
         $("#check_all").prop("checked", false);
@@ -682,6 +693,13 @@
                 build_page_nav(result);
             }
         });
+    });
+
+    //页码搜索
+    $("#page_search_btn").click(function (){
+        var pn = $("#page_search_input").val();
+
+        to_page(pn);
     });
 
 </script>
