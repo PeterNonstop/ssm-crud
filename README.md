@@ -1,7 +1,7 @@
 # ssm-crud
 ssm-crud
-根据尚硅谷学习视频(尚硅谷SSM框架实战，ssm整合教程, https://www.bilibili.com/video/BV17W411g7zP)，idea + spring5.2.13
-SSM框架写的员工增删改查
+根据尚硅谷学习视频 (尚硅谷SSM框架实战，ssm整合教程, https://www.bilibili.com/video/BV17W411g7zP )，
+idea + spring5.2.13 SSM框架写的员工增删改查
 功能点
 • 1、分页
 • 2、数据校验• jquery前端校验+JSR303后端校验
