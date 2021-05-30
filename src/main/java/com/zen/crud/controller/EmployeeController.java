@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 处理员工crud
@@ -221,6 +219,7 @@ public class EmployeeController {
 
     /**
      * 通过ID查询带部门信息
+     *
      * @param empId
      * @param request
      * @return
@@ -244,10 +243,22 @@ public class EmployeeController {
             emps = employeeService.getAll();
         }
 
-        //用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行。
-        //封装了详细的分页信息，包括我们查询出来的数据，传入连续显示的页数(5)
-        PageInfo page = new PageInfo(emps, 5);
+        System.out.println(emps.parallelStream().filter(Objects::nonNull).collect(Collectors.toList()));
 
-        return Msg.success().add("pageInfo", page);
+        // 为空
+        if ((emps.size() == 1 && null == emps.get(0)) || emps.size() == 0) {
+
+            System.out.println("NO MSG.");
+            return Msg.fail().add("va_msg", "用户名ID不存在；请重试！");
+
+        } else {
+            // 不为空
+
+            //用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行。
+            //封装了详细的分页信息，包括我们查询出来的数据，传入连续显示的页数(5)
+            PageInfo page = new PageInfo(emps, 5);
+
+            return Msg.success().add("pageInfo", page);
+        }
     }
 }

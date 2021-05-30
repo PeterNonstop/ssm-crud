@@ -685,12 +685,21 @@
             data: "empId=" + empId,
             success: function (result) {
                 console.log(result)
-                // 1.页面解析并显示员工数据
-                build_emps_table(result);
-                // 2.解析并显示分页信息
-                build_page_info(result);
-                // 3.解析并显示分页条
-                build_page_nav(result);
+
+                if (result.code == 100) {
+                    // 1.页面解析并显示员工数据
+                    build_emps_table(result);
+                    // 2.解析并显示分页信息
+                    build_page_info(result);
+                    // 3.解析并显示分页条
+                    build_page_nav(result);
+                }
+                else{
+                    alert(result.extend.va_msg);
+
+                    to_page(0);
+                }
+
             }
         });
     });
